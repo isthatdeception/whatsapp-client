@@ -13,14 +13,23 @@ import {
 // style
 import "./Chat.css";
 
-
 // chat function
 function Chat() {
   // chat state change
+  const [input, setInput] = useState("");
   const [seed, setSeed] = useState("");
+
+  // hook for random avatars
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    console.log("you typed >> ", input);
+
+    setInput("");
+  };
 
   return (
     <div className="chat">
@@ -53,8 +62,15 @@ function Chat() {
       <div className="chat__footer">
         <InsertEmoticonIcon />
         <form>
-          <input type="text" />
-          <button>Send a message</button>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type a message"
+            type="text"
+          />
+          <button onClick={sendMessage} type="submit">
+            Send a message
+          </button>
         </form>
         <MicIcon />
       </div>
